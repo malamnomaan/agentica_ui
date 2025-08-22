@@ -44,7 +44,7 @@ const IndexDropdown = () => {
           Admin Layout
         </span>
         <Link
-          href="/admin/dashboard"
+          href="/dashboard"
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }>
@@ -53,7 +53,7 @@ const IndexDropdown = () => {
           
         </Link>
         <Link
-          href="/admin/settings"
+          href="settings"
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }>
@@ -62,7 +62,7 @@ const IndexDropdown = () => {
           
         </Link>
         <Link
-          href="/admin/tables"
+          href="tables"
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }>
@@ -71,7 +71,7 @@ const IndexDropdown = () => {
           
         </Link>
         <Link
-          href="/admin/maps"
+          href="maps"
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }>

@@ -1,4 +1,7 @@
 import React from "react";
+import { Chart } from "chart.js";
+import { login, getProfile } from "services/authService";
+import { useRouter } from "next/router";
 
 // components
 
@@ -12,6 +15,19 @@ import CardSocialTraffic from "components/Cards/CardSocialTraffic.js";
 import Admin from "layouts/Admin.js";
 
 export default function Dashboard() {
+  const router = useRouter();
+
+  const handleSignIn = async () => {
+    setError("");
+    try {
+      const tokens = await login(email, password);
+      await getProfile(tokens.access);
+      router.replace("/dashboard"); // redirect to dashboard after login
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <>
       <div className="flex flex-wrap">
