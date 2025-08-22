@@ -1,11 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { login, getProfile } from "services/authService";
 
 // layout for page
-
 import Auth from "layouts/Auth.js";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  const handleSignIn = async () => {
+    setError("");
+    try {
+      const tokens = await login(email, password);
+      await getProfile(tokens.access); // fetch and save profile
+      router.replace("/landing"); // redirect after login
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <>
       <div className="container mx-auto px-4 h-full">
@@ -50,6 +67,8 @@ export default function Login() {
                     </label>
                     <input
                       type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Email"
                     />
@@ -64,6 +83,8 @@ export default function Login() {
                     </label>
                     <input
                       type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Password"
                     />
@@ -81,10 +102,17 @@ export default function Login() {
                     </label>
                   </div>
 
+                  {error && (
+                    <div className="text-red-500 text-xs text-center my-2">
+                      {error}
+                    </div>
+                  )}
+
                   <div className="text-center mt-6">
                     <button
                       className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                       type="button"
+                      onClick={handleSignIn}
                     >
                       Sign In
                     </button>
@@ -104,9 +132,7 @@ export default function Login() {
               </div>
               <div className="w-1/2 text-right">
                 <Link href="/auth/register" className="text-blueGray-200">
-
                   <small>Create new account</small>
-
                 </Link>
               </div>
             </div>
